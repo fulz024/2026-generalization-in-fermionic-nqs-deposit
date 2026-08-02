@@ -1,0 +1,41 @@
+{
+  "C_metric": "C_A=Re(<ref_A|model_A>)/sqrt(q_A*w_A), after visible-only global phase alignment",
+  "D_metric": "D_A=2*sqrt(q_A*w_A)/(q_A+w_A), symmetric probability-mass agreement",
+  "E_metric": "E_A=1-C_A*D_A=||model_A-ref_A||^2/(q_A+w_A)",
+  "K_values": [
+    512,
+    1024,
+    1280,
+    1536,
+    1792,
+    2048,
+    2560,
+    3072,
+    4096,
+    8192,
+    12288,
+    16384,
+    24576,
+    32768
+  ],
+  "analysis": "half_octave_completion_extraction",
+  "ansatzes": [
+    "mlp_direct",
+    "mps",
+    "nnbf",
+    "transformer_nnbf"
+  ],
+  "band_definition": "Each dyadic octave [2^b,2^(b+1)) in zero-based reference-probability rank is split at round(sqrt(2)*2^b).",
+  "dimension": 853776,
+  "duplicate_keys": [],
+  "global_phase_policy": "normalize the model and align its global phase using only the visible overlap <reference_S|model_S> before all metrics; hidden and full coefficients are not used",
+  "half_octave_row_count": 10920,
+  "input_path_count": 280,
+  "normalized_mse": "2 - 2 Re(<model_B|ref_B>)/sqrt(Q_B W_B), range [0,4]",
+  "pipeline_validation": "pass",
+  "selected_wavefunction_count": 280,
+  "strict_unseen": "2*K <= one-based band_start",
+  "system": "3x4 Hubbard U/t=4",
+  "target": 0.99999,
+  "validation_errors": []
+}

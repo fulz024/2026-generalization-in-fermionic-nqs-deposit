@@ -1,0 +1,78 @@
+{
+  "dense_epoch100": {
+    "mlp_direct": {
+      "exact_gain_Ha": [
+        1.0730510908980162,
+        2.09508049232349,
+        1.891734769974927,
+        1.8574066883668283,
+        2.20476262492918
+      ],
+      "external_fraction": [
+        0.9052102016606834,
+        0.8098159693188689,
+        0.8250986298851558,
+        0.8340393667253888,
+        0.8041716116467127
+      ]
+    },
+    "nnbf": {
+      "exact_gain_Ha": [
+        4.959474846253436,
+        4.680689934511731,
+        4.936758939467872,
+        4.975524661131267,
+        4.784501508586292
+      ],
+      "external_fraction": [
+        0.7452582204390562,
+        0.715333988906922,
+        0.7968802304589475,
+        0.7084535763604015,
+        0.7713596650606539
+      ]
+    }
+  },
+  "max_dense_cumulative_closure_error_Ha": 0.0002945427593461,
+  "max_finite_path_closure_error_Ha": 0.0002827129756035,
+  "panel_d_resolved_update_counts": {
+    "mlp_direct": 50,
+    "nnbf": 70
+  },
+  "quadrant_counts": {
+    "mlp_direct": {
+      "exact_descent": 148,
+      "first_quadrant": 114,
+      "root_external_conflict": 46,
+      "row_count": 220,
+      "through_epoch_100_first_quadrant": 79,
+      "through_epoch_100_root_external_conflict": 14,
+      "through_epoch_100_row_count": 115
+    },
+    "nnbf": {
+      "exact_descent": 181,
+      "first_quadrant": 177,
+      "root_external_conflict": 21,
+      "row_count": 220,
+      "through_epoch_100_first_quadrant": 111,
+      "through_epoch_100_root_external_conflict": 2,
+      "through_epoch_100_row_count": 115
+    }
+  },
+  "scaffold_fractions": {
+    "mlp_direct": [
+      0.00026176261134509533,
+      0.0007181385808644056,
+      0.0028052477540252262,
+      -0.0003087187425991395,
+      -0.0008009968216451184
+    ],
+    "nnbf": [
+      0.44937511969098515,
+      0.30254716559620054,
+      0.453134841844394,
+      0.326171283475318,
+      0.4046236247231038
+    ]
+  }
+}

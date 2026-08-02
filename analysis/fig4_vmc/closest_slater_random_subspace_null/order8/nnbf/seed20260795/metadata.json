@@ -1,0 +1,38 @@
+{
+  "analysis": "equal-dimension Haar-random off-root subspace null",
+  "architecture": "LogNNBF",
+  "config": "configs/vmc_dynamic_completion_loggrid_20260726/generated/h10_lowdin_nnbf_seed20260795.yaml",
+  "epochs": [
+    11,
+    13,
+    15,
+    17,
+    20,
+    23,
+    27,
+    32,
+    37,
+    43,
+    50,
+    58,
+    67,
+    78,
+    90
+  ],
+  "excluded_information": [
+    "update direction",
+    "Hamiltonian residual",
+    "post-update state",
+    "closest-Slater fit",
+    "ansatz internal representation"
+  ],
+  "null_seed_base": 2026072800,
+  "quadrature_order": 8,
+  "random_draws": 256,
+  "random_subspace_dimension": 50,
+  "reference_dir": "reference/hchain_H10_R1p8_sto3g_lowdin_interleaved",
+  "run_dir": "data/vmc_dynamic_completion_loggrid_20260726/h10/lowdin/nnbf/seed20260795",
+  "run_seed": 20260795,
+  "sampler": "distributionally exact restriction of a real Haar-Stiefel rank-k projector, sampled through Gaussian top rows and a Bartlett Wishart complement",
+  "selection_information": "each random subspace is selected from the external support A_t, its dimension, and a recorded pseudorandom seed only"
+}

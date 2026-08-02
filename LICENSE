@@ -1,0 +1,17 @@
+This repository uses two licenses:
+
+- Source code under `scripts/`, together with software-related configuration
+  such as `requirements.txt`, is licensed under the MIT License in
+  `LICENSE-CODE`.
+- Original processed data and metadata under `analysis/` and `reference/`,
+  together with the README and original generated figures, are licensed under
+  the Creative Commons Attribution 4.0 International License described in
+  `LICENSE-DATA`.
+
+These licenses apply only to material for which the repository authors hold
+the relevant rights. They do not relicense third-party source data, software,
+or other material identified in `THIRD_PARTY_NOTICES.md` or in a file's
+provenance metadata.
+
+Copyright (c) 2026 The authors of "Physically Structured Generalization in
+Fermionic Neural Quantum States".

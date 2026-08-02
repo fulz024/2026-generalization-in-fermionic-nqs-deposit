@@ -1,0 +1,3 @@
+architecture,terminal_error_lower,terminal_error_upper
+mlp_direct,0.6452243551574295,0.9750397039587737
+nnbf,0.002240959945840615,0.025326334415766816

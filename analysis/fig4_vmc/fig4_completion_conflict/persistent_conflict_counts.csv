@@ -1,0 +1,11 @@
+architecture,seed,window_centers,persistent_conflict_centers
+mlp_direct,20260791,40,11
+mlp_direct,20260792,40,11
+mlp_direct,20260793,40,11
+mlp_direct,20260794,40,15
+mlp_direct,20260795,40,8
+nnbf,20260791,40,3
+nnbf,20260792,40,0
+nnbf,20260793,40,2
+nnbf,20260794,40,1
+nnbf,20260795,40,0

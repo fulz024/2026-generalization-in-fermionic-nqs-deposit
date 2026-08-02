@@ -1,0 +1,34 @@
+{
+  "family": "affine",
+  "n_dets": 1,
+  "source_checkpoint": "analysis/fig3_determinant_probe_extreme_20260802/d1/affine/post_lbfgs_checkpoint.pt",
+  "initial": {
+    "visible_projective_error": 4.9012160144856765e-06,
+    "visible_abs_cosine": 0.99999754938899
+  },
+  "continued_adam": {
+    "stage": "affine_continued_adam",
+    "restart": -1,
+    "best_step": 20000,
+    "visible_projective_error": 1.7069332470809329e-06,
+    "visible_abs_cosine": 0.9999991465330123,
+    "elapsed_seconds": 86.84327343478799
+  },
+  "continued_lbfgs": {
+    "stage": "affine_lbfgs",
+    "restart": -1,
+    "best_step": 199,
+    "visible_projective_error": 1.7036932180580777e-06,
+    "visible_abs_cosine": 0.9999991481530282,
+    "log_norm_ratio": -0.000643707622871413,
+    "gradient_norm": 2.617444082078989e-05,
+    "elapsed_seconds": 22.927072670310736
+  },
+  "evaluation": {
+    "visible_directional_agreement": 0.999999148153028,
+    "visible_projective_error": 1.7036932182801223e-06,
+    "trusted_unseen_directional_agreement": 0.9311720272868773,
+    "whole_pool_directional_agreement": 0.9516609802650644,
+    "visible_least_squares_scale": 1.0006430624515958
+  }
+}

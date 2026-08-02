@@ -1,0 +1,61 @@
+{
+  "analysis": "visible-corrected component counterfactuals",
+  "top_k": 4096,
+  "Gamma_unseen_definition": "1 - ||P_U(target-visible_corrected_base)||^2 / ||P_U target||^2; the base scale and sign are fitted from visible coefficients only",
+  "components": [
+    {
+      "component": "visible_corrected_direct_mlp",
+      "n_seed": 5,
+      "Gamma_unseen_mean": -32.60159440180863,
+      "Gamma_unseen_std": 6.821229015454048,
+      "C_hidden_mean": 0.0015681658578605088,
+      "normalized_unseen_area_mean": 0.00939917889284065,
+      "normalized_unseen_area_std": 0.0030404109536438504
+    },
+    {
+      "component": "visible_corrected_neural_jastrow",
+      "n_seed": 5,
+      "Gamma_unseen_mean": 0.5258614943440048,
+      "Gamma_unseen_std": 0.010761640473177929,
+      "C_hidden_mean": 0.9313975255189456,
+      "normalized_unseen_area_mean": 0.7026756470840685,
+      "normalized_unseen_area_std": 0.0012015883262587465
+    },
+    {
+      "component": "visible_corrected_nnbf",
+      "n_seed": 5,
+      "Gamma_unseen_mean": 0.6725901836232526,
+      "Gamma_unseen_std": 0.09325820741938129,
+      "C_hidden_mean": 0.9031729239578569,
+      "normalized_unseen_area_mean": 0.721326357485463,
+      "normalized_unseen_area_std": 0.01451560068167731
+    },
+    {
+      "component": "visible_corrected_simple_backflow",
+      "n_seed": 1,
+      "Gamma_unseen_mean": -2.7379509859919744,
+      "Gamma_unseen_std": NaN,
+      "C_hidden_mean": 0.8812575241735698,
+      "normalized_unseen_area_mean": 0.7510758604021105,
+      "normalized_unseen_area_std": NaN
+    },
+    {
+      "component": "visible_corrected_slater",
+      "n_seed": 1,
+      "Gamma_unseen_mean": -6.857615138401958,
+      "Gamma_unseen_std": NaN,
+      "C_hidden_mean": 0.8342365675712564,
+      "normalized_unseen_area_mean": 0.7123527654297541,
+      "normalized_unseen_area_std": NaN
+    },
+    {
+      "component": "visible_truncation",
+      "n_seed": 1,
+      "Gamma_unseen_mean": 0.0,
+      "Gamma_unseen_std": NaN,
+      "C_hidden_mean": 0.0,
+      "normalized_unseen_area_mean": 0.0,
+      "normalized_unseen_area_std": NaN
+    }
+  ]
+}

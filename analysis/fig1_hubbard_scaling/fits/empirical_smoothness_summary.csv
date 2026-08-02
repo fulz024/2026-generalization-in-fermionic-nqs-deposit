@@ -1,0 +1,9 @@
+ansatz,response,n_bands,median_adjacent_violation_fraction,median_wrong_way_variation_fraction,fraction_bands_net_expected
+mlp_direct,F_band,16,0.4222222222222222,0.2376359122702938,0.8125
+mlp_direct,band_signed_cosine,16,0.4307692307692308,0.3709967918920032,0.75
+mps,F_band,16,0.10795454545454546,0.00022106218388247173,1.0
+mps,band_signed_cosine,16,0.10096153846153846,0.004535692562486309,0.875
+nnbf,F_band,16,0.0,0.0,1.0
+nnbf,band_signed_cosine,16,0.0,0.0,1.0
+transformer_nnbf,F_band,16,0.0,0.0,1.0
+transformer_nnbf,band_signed_cosine,16,0.0,0.0,1.0

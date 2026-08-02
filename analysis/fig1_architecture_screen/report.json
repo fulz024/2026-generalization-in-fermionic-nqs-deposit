@@ -1,0 +1,90 @@
+{
+  "analysis": "prospective Fig. 1(a) K=4096 architecture-zoo screen",
+  "top_k": 4096,
+  "visible_error_shell": "projective infidelity 1e-5 for trainable models",
+  "parameter_matching_target": 675608,
+  "visible_corrected_slater_scale_from_visible_only": 3.1652961978640373,
+  "included_ansatzes": [
+    "cnn_direct",
+    "mlp_direct",
+    "mps",
+    "neural_jastrow",
+    "nnbf",
+    "transformer_direct_phase",
+    "visible_corrected_slater"
+  ],
+  "decision_metrics": [
+    {
+      "ansatz": "cnn_direct",
+      "K": 4096,
+      "parameter_count": 675608,
+      "n_seed": 5,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": -0.01749952164258644,
+      "ell_0p5": NaN,
+      "A_unseen_r12_to_r19p5": 0.12415436830052894
+    },
+    {
+      "ansatz": "mlp_direct",
+      "K": 4096,
+      "parameter_count": 675608,
+      "n_seed": 5,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": -0.05541071993017754,
+      "ell_0p5": NaN,
+      "A_unseen_r12_to_r19p5": 0.07193574601834501
+    },
+    {
+      "ansatz": "mps",
+      "K": 4096,
+      "parameter_count": 644640,
+      "n_seed": 5,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": 0.38217923722226077,
+      "ell_0p5": NaN,
+      "A_unseen_r12_to_r19p5": 0.9727423318081078
+    },
+    {
+      "ansatz": "neural_jastrow",
+      "K": 4096,
+      "parameter_count": 675608,
+      "n_seed": 5,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": 0.9917976813561984,
+      "ell_0p5": 5.0,
+      "A_unseen_r12_to_r19p5": 5.624936649627358
+    },
+    {
+      "ansatz": "nnbf",
+      "K": 4096,
+      "parameter_count": 650432,
+      "n_seed": 5,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": 0.9870391434118408,
+      "ell_0p5": 5.5,
+      "A_unseen_r12_to_r19p5": 5.770610859883704
+    },
+    {
+      "ansatz": "transformer_direct_phase",
+      "K": 4096,
+      "parameter_count": 675457,
+      "n_seed": 5,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": 0.020074387884750876,
+      "ell_0p5": NaN,
+      "A_unseen_r12_to_r19p5": 0.025293471990372997
+    },
+    {
+      "ansatz": "visible_corrected_slater",
+      "K": 4096,
+      "parameter_count": 0,
+      "n_seed": 1,
+      "first_fully_unseen_r": 12.0,
+      "C_first_fully_unseen": 0.9992093644673335,
+      "ell_0p5": 5.0,
+      "A_unseen_r12_to_r19p5": 5.698822123438033
+    }
+  ],
+  "protocol_caveat": "The phase-separated direct Transformer is a favorable optimization-aided control: visible phase and relative-log-amplitude initialization is followed by a pure-projective rescreen, within which the checkpoint closest to visible infidelity 1e-5 is selected. It is not a same-training-path primary comparison.",
+  "caveat": "A trainable arm is included only after a wavefunction at the common visible shell has been extracted. Smoke runs that miss the shell are reported separately and are not negative generalization evidence."
+}

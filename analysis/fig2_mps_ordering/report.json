@@ -1,0 +1,30 @@
+{
+  "analysis": "Fig. 2(c) neuralized-MPS ordering comparison",
+  "target_file_count": 220,
+  "expected_target_file_count": 220,
+  "all_cells_complete": true,
+  "all_visible_shells_within_factor_1p25": true,
+  "correlations": {
+    "neural_product_d1": {
+      "burden_column": "d64_schmidt_tail_sum",
+      "n_orderings": 10,
+      "spearman_rho": -0.7696969696969697
+    },
+    "pure_mps_d64": {
+      "burden_column": "d64_schmidt_tail_sum",
+      "n_orderings": 10,
+      "spearman_rho": -0.9151515151515152
+    },
+    "nn_fmps_d64": {
+      "burden_column": "d64_schmidt_tail_sum",
+      "n_orderings": 10,
+      "spearman_rho": -0.9151515151515152
+    },
+    "pure_mps_d186": {
+      "burden_column": "d186_schmidt_tail_sum",
+      "n_orderings": 10,
+      "spearman_rho": -0.9393939393939393
+    }
+  },
+  "validation_errors": []
+}

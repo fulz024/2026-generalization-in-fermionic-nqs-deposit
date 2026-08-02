@@ -1,0 +1,39 @@
+{
+  "task_count": 5,
+  "completed_count": 5,
+  "protocol": {
+    "system": "hub34",
+    "top_k": 4096,
+    "seeds": [
+      20260620,
+      20260621,
+      20260622,
+      20260623,
+      20260624
+    ],
+    "ansatz": "nnbf_head_determinant",
+    "training_objective": "visible_overlap",
+    "optimizer": "adamw",
+    "learning_rate": 0.0005,
+    "scheduler": "none",
+    "weight_decay": 0.0,
+    "batch": "full visible support",
+    "maximum_steps": 30000,
+    "checkpoint_selection": "minimum absolute log10 visible-infidelity distance to 1e-5",
+    "initial_output_norm_calibration": false,
+    "projective_output_gauge_fix": false
+  },
+  "result": {
+    "all_common_shell_eligible": true,
+    "normalized_unseen_area_mean": 0.7384728117222694,
+    "normalized_unseen_area_std": 0.016844873545782083
+  },
+  "source_sha256": {
+    "scripts/fig2_structure_ansatz.py": "9b96ca76ccb5eb55534e2d759306e7c4d1ce72288eef119327d25610b04b4326",
+    "scripts/run_visible_overlap_sweep.py": "61c0479e179856998041d1725b81114f258e977e40e83948fc546a98c02c4ac9",
+    "scripts/overlap_common.py": "6205d2154a26ccfa70204175b5a4ad6ccceebd35d4881ad1eb8e4b4b75bceb25",
+    "scripts/extract_half_octave_completion.py": "7730d2a0cf60b0ab1aa5d82b4ef4e2b3756945af401151500b0d348a173bd340",
+    "scripts/summarize_fig2_exact_nnbf_heads.py": "e7436ab8e3f67992ae3afa465fca1082880cfc84ea14e7d2c931bbbde32d5b6c",
+    "scripts/plot_fig2.py": "7c4352871f6951c5acdd274b9d8f4b62a31cea7d3f7b72aabb2f289754aa2c5f"
+  }
+}

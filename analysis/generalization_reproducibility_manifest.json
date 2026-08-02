@@ -1,0 +1,78 @@
+{
+  "main_figures": {
+    "fig1": {
+      "figure": "figures/fig1_hubbard_generalization.pdf",
+      "script": "scripts/plot_fig1.py",
+      "summary": "analysis/fig1_hubbard_generalization/report.json",
+      "architecture_screen": "analysis/fig1_architecture_screen",
+      "hubbard_scaling": "analysis/fig1_hubbard_scaling",
+      "nnfmps": "analysis/fig1_nnfmps"
+    },
+    "fig2": {
+      "figure": "figures/fig2_structure_mechanism.pdf",
+      "script": "scripts/plot_fig2.py",
+      "component_tables": "analysis/fig2_components",
+      "head_swap_tables": "analysis/fig2_head_swaps",
+      "determinant_rerun_manifest": "analysis/fig2_determinant_rerun_manifest.json",
+      "mps_order_tables": "analysis/fig2_mps_ordering",
+      "mpbs_tables": "analysis/fig2_mpbs",
+      "mpbs_ansatz": "scripts/fig2_mpbs_ansatz.py",
+      "mpbs_analysis": "scripts/analyze_fig2_mpbs.py",
+      "mpbs_compute_manifest": "analysis/fig2_mpbs/compute_manifest.json",
+      "support_tables": "analysis/fig2_support"
+    },
+    "fig3": {
+      "figure": "figures/fig3_selected_spaces.pdf",
+      "summary_script": "scripts/summarize_fig3.py",
+      "single_det_builder": "scripts/build_fig3_single_det_probes.py",
+      "plot_script": "scripts/plot_fig3.py",
+      "summary": "analysis/fig3_selected_spaces/report.json",
+      "analysis_dir": "analysis/fig3_selected_spaces",
+      "fe_single_det_probes": "analysis/fig3_fe_probes",
+      "n2_single_det_probes": "analysis/fig3_n2_probes/d1"
+    },
+    "fig4": {
+      "figure": "figures/fig4_vmc.pdf",
+      "script": "scripts/plot_fig4.py",
+      "finite_ledger_script": "scripts/plot_fig4_finite.py",
+      "finite_step_tables": "analysis/fig4_vmc/finite_step",
+      "panel_tables": "analysis/fig4_vmc/fig4_completion_conflict",
+      "dense_shape_ledger": "analysis/fig4_vmc/dense_completion_ledger",
+      "dense_shape_raw": "analysis/fig4_vmc/evidence/dense_completion_shape_33932",
+      "reference_energy": "reference/hchain_H10_R1p8_sto3g_lowdin_interleaved/reference.json"
+    }
+  },
+  "supplementary_figures": {
+    "interaction_strength": {
+      "figure": "figures/figS_interaction_strength.pdf",
+      "script": "scripts/plot_figS_interaction_strength.py",
+      "table": "analysis/figS_interaction_strength/sector_metrics.csv"
+    },
+    "stochastic_born_support": {
+      "figure": "figures/figS_stochastic_born_support.pdf",
+      "script": "scripts/plot_figS_stochastic_born_support.py",
+      "seed_metrics": "analysis/si_stochastic_born_support/seed_metrics.csv",
+      "summary": "analysis/si_stochastic_born_support/si_figure_report.json"
+    },
+    "h10_truncation": {
+      "figure": "figures/figS_h10_truncation_curve.pdf",
+      "script": "scripts/plot_figS_h10_truncation.py",
+      "tables": "analysis/figS_h10"
+    },
+    "band_control": {
+      "figure": "figures/figS_band_control.pdf",
+      "script": "scripts/plot_figS_band_control.py",
+      "trajectory": "analysis/fig4_vmc/positive_bridge/certified_completion_trajectory.csv",
+      "direct_jvp_tables": "analysis/fig4_vmc/direct_jvp",
+      "matched_control_tables": "analysis/fig4_vmc/matched_control"
+    }
+  },
+  "audits": {
+    "checkpoint_shell": "analysis/checkpoint_shell_control/checkpoint_shell_summary.csv",
+    "chemical_scale": "analysis/fig3_selected_spaces",
+    "vmc_finite_step": "analysis/fig4_vmc/fig4_finite_completion",
+    "vmc_dense_shape": "analysis/fig4_vmc/dense_completion_ledger",
+    "closest_slater": "analysis/fig4_vmc/closest_slater_visible_tangent_loggrid",
+    "haar_null": "analysis/fig4_vmc/closest_slater_random_subspace_null"
+  }
+}

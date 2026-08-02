@@ -1,0 +1,13 @@
+{
+  "figure": "figures\\fig1_hubbard_generalization.pdf",
+  "fixed_K_panel_b_c": 4096,
+  "summary_metric": "C_U: signed directional agreement on the full unseen sector",
+  "front_ansatzes": [
+    "mlp_direct",
+    "nnfmps",
+    "nnbf",
+    "transformer_nnbf"
+  ],
+  "direct_transformer_status": "optimization-aided favorable direct control; used only in the fixed-K architecture screen, not in the K-scaling panels",
+  "fixed_k_transformer_nnbf_source": "K=4096 rows from the same five-seed matched scaling data used for panels c-d"
+}

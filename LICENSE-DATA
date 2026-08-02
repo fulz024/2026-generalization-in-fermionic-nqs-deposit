@@ -1,0 +1,24 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+SPDX-License-Identifier: CC-BY-4.0
+
+Unless a file or provenance record states otherwise, the original processed
+data, metadata, documentation, and generated figures created by the authors
+and distributed in this repository are licensed under CC BY 4.0.
+
+You may share and adapt these materials for any purpose, provided that you
+give appropriate credit, provide a link to the license, and indicate whether
+changes were made.
+
+License summary: https://creativecommons.org/licenses/by/4.0/
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+This notice grants no rights in third-party source data, software, or other
+material that the repository authors do not own or are not authorized to
+license. Such inputs are not redistributed here unless explicitly stated.
+See `THIRD_PARTY_NOTICES.md` and the provenance metadata for source
+attributions.
+
+For scholarly use, we request citation of the accompanying manuscript,
+"Physically Structured Generalization in Fermionic Neural Quantum States".
+This citation request is not an additional license condition beyond CC BY
+4.0.

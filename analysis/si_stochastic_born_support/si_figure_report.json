@@ -1,0 +1,125 @@
+{
+  "figure": "figures/figS_stochastic_born_support.pdf",
+  "input": "analysis/si_stochastic_born_support/seed_metrics.csv",
+  "design": "three nested Born-sampled supports by two model initializations",
+  "support_sizes": [
+    1024,
+    4096,
+    16384
+  ],
+  "ranked_prefix_mass": {
+    "1024": 0.10243285692703619,
+    "4096": 0.23653129909797338,
+    "16384": 0.463867355639624
+  },
+  "aggregate": [
+    {
+      "ansatz": "mlp_direct",
+      "K": 1024,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999889924483826,
+      "support_probability_mass_mean": 0.028672925966978135,
+      "C_full_mean": 0.00493381364034695,
+      "C_full_std": 0.00040201092264170344
+    },
+    {
+      "ansatz": "mlp_direct",
+      "K": 4096,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999898762860223,
+      "support_probability_mass_mean": 0.10138746790858749,
+      "C_full_mean": 0.02514096399413435,
+      "C_full_std": 0.0019260927883830122
+    },
+    {
+      "ansatz": "mlp_direct",
+      "K": 16384,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999885527023827,
+      "support_probability_mass_mean": 0.2968763866181162,
+      "C_full_mean": 0.11561515466209764,
+      "C_full_std": 0.01716961943056402
+    },
+    {
+      "ansatz": "mps",
+      "K": 1024,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999900561817775,
+      "support_probability_mass_mean": 0.028672925966978135,
+      "C_full_mean": 0.04206062120562277,
+      "C_full_std": 0.00280977920846483
+    },
+    {
+      "ansatz": "mps",
+      "K": 4096,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.999990142958893,
+      "support_probability_mass_mean": 0.10138746790858749,
+      "C_full_mean": 0.15348460178499942,
+      "C_full_std": 0.013158931322128415
+    },
+    {
+      "ansatz": "mps",
+      "K": 16384,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999901845027366,
+      "support_probability_mass_mean": 0.2968763866181162,
+      "C_full_mean": 0.6436110047966245,
+      "C_full_std": 0.044816386386555815
+    },
+    {
+      "ansatz": "nnbf",
+      "K": 1024,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.999990341346268,
+      "support_probability_mass_mean": 0.028672925966978135,
+      "C_full_mean": 0.0203904717050354,
+      "C_full_std": 0.005288091851824155
+    },
+    {
+      "ansatz": "nnbf",
+      "K": 4096,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999896886261507,
+      "support_probability_mass_mean": 0.10138746790858749,
+      "C_full_mean": 0.3992920255349277,
+      "C_full_std": 0.28378234719676576
+    },
+    {
+      "ansatz": "nnbf",
+      "K": 16384,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999903057352005,
+      "support_probability_mass_mean": 0.2968763866181162,
+      "C_full_mean": 0.9874809636369624,
+      "C_full_std": 0.0022291301763326427
+    },
+    {
+      "ansatz": "transformer_nnbf",
+      "K": 1024,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999890326993047,
+      "support_probability_mass_mean": 0.028672925966978135,
+      "C_full_mean": 0.027023497643377165,
+      "C_full_std": 0.011118578712074985
+    },
+    {
+      "ansatz": "transformer_nnbf",
+      "K": 4096,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999897252474019,
+      "support_probability_mass_mean": 0.10138746790858749,
+      "C_full_mean": 0.9921874688139453,
+      "C_full_std": 0.0013960173508997655
+    },
+    {
+      "ansatz": "transformer_nnbf",
+      "K": 16384,
+      "n_fit": 6,
+      "visible_overlap_norm_mean": 0.9999900143602595,
+      "support_probability_mass_mean": 0.2968763866181162,
+      "C_full_mean": 0.9980838486712993,
+      "C_full_std": 0.0004041156247473678
+    }
+  ]
+}

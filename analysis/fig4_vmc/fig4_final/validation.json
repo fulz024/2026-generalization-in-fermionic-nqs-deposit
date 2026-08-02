@@ -1,0 +1,70 @@
+{
+  "ablation_gain_comparisons": 14,
+  "ablation_gain_nnbf_wins": 14,
+  "band_cosine_comparisons": 70,
+  "band_cosine_nnbf_wins": 70,
+  "failed_match_batches": 6,
+  "main_panel_b_asinh_width_Ha": 0.001,
+  "main_panel_b_log_uniform_epochs": [
+    1,
+    2,
+    4,
+    7,
+    12,
+    19,
+    30,
+    50,
+    75,
+    150,
+    200,
+    300,
+    500,
+    750,
+    1250,
+    2000
+  ],
+  "main_panel_c_epoch_mean_gate_counts": {
+    "conflict_and_actual_rise": 7,
+    "nonlinear_reversal_inside_first_quadrant": 3,
+    "stable_descent_first_quadrant": 22,
+    "stable_descent_outside_first_quadrant": 0
+  },
+  "matched_batches": 14,
+  "max_accepted_fs_norm_mismatch": 0.019027459369238702,
+  "max_accepted_root_residual_mismatch": 0.01343166659939108,
+  "max_ledger_identity_error": 6.019490461639521e-16,
+  "mean_descent_removed_fraction": {
+    "mlp_direct": 0.919781346530002,
+    "nnbf": 0.924312349513359
+  },
+  "root_outside_scatter": {
+    "fast": {
+      "mlp_direct": {
+        "mean_D_A_tan": 0.08407688265786366,
+        "mean_D_R_tan": 0.005474804231898932,
+        "root_positive_outside_negative_count": 2,
+        "row_count": 100
+      },
+      "nnbf": {
+        "mean_D_A_tan": 0.19047410399083728,
+        "mean_D_R_tan": 0.06764131506895128,
+        "root_positive_outside_negative_count": 0,
+        "row_count": 100
+      }
+    },
+    "mlp_approach": {
+      "mlp_direct": {
+        "mean_D_A_tan": -0.004710690965321775,
+        "mean_D_R_tan": 0.005276752871248207,
+        "root_positive_outside_negative_count": 7,
+        "row_count": 15
+      },
+      "nnbf": {
+        "mean_D_A_tan": 0.00015634967946179931,
+        "mean_D_R_tan": 9.545748387373328e-05,
+        "root_positive_outside_negative_count": 4,
+        "row_count": 15
+      }
+    }
+  }
+}

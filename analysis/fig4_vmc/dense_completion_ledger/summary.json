@@ -1,0 +1,94 @@
+{
+  "architectures": {
+    "mlp_direct": {
+      "cumulative_exact_gain_Ha": {
+        "max": 2.20476262492918,
+        "median": 1.891734769974927,
+        "min": 1.0730510908980162
+      },
+      "cumulative_external_fraction": {
+        "max": 0.9052102016606834,
+        "median": 0.8250986298851558,
+        "min": 0.8041716116467127
+      },
+      "cumulative_external_gain_Ha": {
+        "max": 1.7730075133877354,
+        "median": 1.5608677668124227,
+        "min": 0.9713367943840095
+      },
+      "cumulative_external_mass_fraction": {
+        "max": 0.031931077954007105,
+        "median": 0.019475045119513867,
+        "min": -0.0971332970968121
+      },
+      "cumulative_external_shape_fraction": {
+        "max": 1.0023434987574948,
+        "median": 0.8122135721555425,
+        "min": 0.772240533692705
+      },
+      "cumulative_root_fraction": {
+        "max": 0.19583831202452284,
+        "median": 0.17493288400179904,
+        "min": 0.09491575078919108
+      },
+      "cumulative_root_gain_Ha": {
+        "max": 0.4317769908808868,
+        "median": 0.3309266190781939,
+        "min": 0.10184944992774574
+      },
+      "final_closure_error_Ha": {
+        "max": 0.000135153413739042,
+        "median": 5.961591568959257e-05,
+        "min": -2.7246279840520415e-05
+      }
+    },
+    "nnbf": {
+      "cumulative_exact_gain_Ha": {
+        "max": 4.975524661131267,
+        "median": 4.936758939467872,
+        "min": 4.680689934511731
+      },
+      "cumulative_external_fraction": {
+        "max": 0.7968802304589475,
+        "median": 0.7452582204390562,
+        "min": 0.7084535763604015
+      },
+      "cumulative_external_gain_Ha": {
+        "max": 3.934005601403427,
+        "median": 3.6905714811453154,
+        "min": 3.3482566016907565
+      },
+      "cumulative_external_mass_fraction": {
+        "max": 0.0029769434476307425,
+        "median": 0.000677033036033363,
+        "min": -0.0001665179031267311
+      },
+      "cumulative_external_shape_fraction": {
+        "max": 0.797046748362074,
+        "median": 0.7426584104383603,
+        "min": 0.7077765433243683
+      },
+      "cumulative_root_fraction": {
+        "max": 0.29157235177423985,
+        "median": 0.2547463473212522,
+        "min": 0.20309004884766804
+      },
+      "cumulative_root_gain_Ha": {
+        "max": 1.4507254267567713,
+        "median": 1.2634081017146916,
+        "min": 1.002606614165692
+      },
+      "final_closure_error_Ha": {
+        "max": 0.00012900607332522185,
+        "median": 2.2653692353102883e-05,
+        "min": -0.0002925497926415943
+      }
+    }
+  },
+  "max_external_mass_shape_closure_Ha": 2.220446049250313e-16,
+  "max_order4_to_8_external_change_Ha": 0.0011976890882369993,
+  "max_order4_to_8_root_change_Ha": 0.000256149754446211,
+  "max_order8_step_closure_Ha": 0.0002827129756035,
+  "row_count": 1000,
+  "run_root": "analysis/fig4_vmc\\evidence\\dense_completion_shape_33932"
+}

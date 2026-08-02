@@ -1,0 +1,24 @@
+{
+  "pipeline_validation": "pass",
+  "S1_fixed_band_completion": "undetermined",
+  "S2_approx_power_law": "undetermined",
+  "n_input_paths": 672,
+  "n_selected_wavefunctions": 224,
+  "n_sector_rows": 224,
+  "n_band_rows": 1768,
+  "n_primary_band_rows": 1708,
+  "n_permutations": 0,
+  "representative_filters": {
+    "ansatzes": [],
+    "seeds": [],
+    "top_k": [],
+    "bands": []
+  },
+  "reasons": [
+    "Pipeline outputs and invariants were validated locally.",
+    "The representative permutation-null subset has not been run.",
+    "Gate S1 still requires reproduction at an additional U.",
+    "Gate S2 remains undetermined until K densification and endpoint-stability tests are complete."
+  ],
+  "validation_errors": []
+}

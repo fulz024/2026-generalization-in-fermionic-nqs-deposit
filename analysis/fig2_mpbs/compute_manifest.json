@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "reader_facing": true,
+  "definition": "all_physical_neighbors_shared",
+  "reference": {
+    "authors": "Lami, Carleo, and Collura",
+    "journal": "Phys. Rev. B 106, L081111 (2022)",
+    "doi": "10.1103/PhysRevB.106.L081111"
+  },
+  "coverage": {
+    "expected_runs": 20,
+    "completed_runs": 20,
+    "orderings": [
+      "physical",
+      "random_04",
+      "random_05",
+      "even_odd"
+    ],
+    "seeds_per_ordering": 5
+  },
+  "validation": {
+    "matched_visible_shell": "20/20",
+    "extraction_errors": 0,
+    "parameter_count_every_ordering": 535200,
+    "zero_backflow_max_log_amplitude_error": 6.93e-14,
+    "zero_backflow_signs_identical": true,
+    "nonempty_stderr_logs": 0
+  },
+  "paths": {
+    "raw_data": "data/fig2_mpbs",
+    "analysis": "analysis/fig2_mpbs"
+  }
+}

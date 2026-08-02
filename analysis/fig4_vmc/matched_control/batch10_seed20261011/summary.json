@@ -1,0 +1,133 @@
+{
+  "batch": {
+    "batch_energy": -0.3548798046532884,
+    "ideal_batch_descent": 3.3835885524749756,
+    "seed": 20261011,
+    "size": 2048,
+    "unique_count": 1963
+  },
+  "match_pass": true,
+  "matching_rule": {
+    "descent_fractions": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "match_tolerance": 0.02,
+    "ridge_ratios": [
+      1e-08,
+      1e-07,
+      1e-06,
+      1e-05,
+      0.0001,
+      0.001,
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "scale_bounds": [
+      0.1,
+      10.0
+    ],
+    "selection_uses_hidden_outcomes": false
+  },
+  "selected_match": {
+    "batch_descent_mismatch": 0.0,
+    "descent_fraction": 0.25,
+    "fs_norm_mismatch": 0.010696702581627563,
+    "match_pass": true,
+    "max_match_mismatch": 0.010696702581627563,
+    "mean_relative_root_residual": 0.816937606948485,
+    "root_residual_mismatch": 0.006648184736806026,
+    "scale_log_distance": 1.506504254204225,
+    "student_fs_norm": 0.509135328516546,
+    "student_index": 9,
+    "student_root_residual": 1.059050390793999,
+    "student_scale": 3.1925380564609434,
+    "target_batch_descent": 0.8458971381187439,
+    "teacher_fs_norm": 0.5037182318694502,
+    "teacher_index": 8,
+    "teacher_root_residual": 1.0661146356399651,
+    "teacher_scale": 1.4129617379834822
+  },
+  "student": {
+    "gate": {
+      "energy": -0.3023025162902223,
+      "energy_mismatch": 9.964562362851925e-05,
+      "infidelity": 3.66759174919018e-07,
+      "pass": true,
+      "residual_cosine": 0.9999997888719928,
+      "residual_norm": 1.3226330814567393
+    },
+    "krylov": {
+      "dimension": 100.0,
+      "orthogonality_max_error": 2.384185791015625e-07,
+      "parameter_count": 535904,
+      "ridge_scale_rayleigh": 4.464245796203613
+    },
+    "label": "LogNNBF",
+    "outcome": {
+      "architecture": "LogNNBF",
+      "fs_norm": 0.509135328516546,
+      "full_exact_tangent_descent": 0.7480030333138463,
+      "hidden_exact_tangent_descent": 0.6946772943677407,
+      "hidden_fraction_of_descent": 0.9287091942530517,
+      "root_exact_tangent_descent": 0.053325738946105546,
+      "scale": 3.1925380564609434
+    },
+    "selected_ridge": {
+      "architecture": "LogNNBF",
+      "batch_descent": 0.26496070623397827,
+      "fs_norm": 0.15947666700046886,
+      "parameter_direction_norm": 0.048597197979688644,
+      "ridge": 44.64245796203613,
+      "ridge_ratio": 10.0,
+      "ridge_scale_rayleigh": 4.464245796203613,
+      "root_jvp_full_consistency": 3.2627473953685065e-07,
+      "root_residual": 1.205770492553711,
+      "root_residual_relative": 0.9270237736708845
+    }
+  },
+  "teacher": {
+    "gate": {
+      "energy": -0.30240216191385105,
+      "energy_mismatch": 2.220446049250313e-16,
+      "infidelity": 2.220446049250313e-16,
+      "pass": true,
+      "residual_cosine": 1.0000000000000002,
+      "residual_norm": 1.322617505114646
+    },
+    "krylov": {
+      "dimension": 100.0,
+      "orthogonality_max_error": 2.384185791015625e-07,
+      "parameter_count": 672532,
+      "ridge_scale_rayleigh": 7.059730529785156
+    },
+    "label": "LogMLPDirect",
+    "outcome": {
+      "architecture": "LogMLPDirect",
+      "fs_norm": 0.5037182318694502,
+      "full_exact_tangent_descent": 0.5345574684365616,
+      "hidden_exact_tangent_descent": 0.49752082653226404,
+      "hidden_fraction_of_descent": 0.9307153223158215,
+      "root_exact_tangent_descent": 0.03703664190429754,
+      "scale": 1.4129617379834822
+    },
+    "selected_ridge": {
+      "architecture": "LogMLPDirect",
+      "batch_descent": 0.5986695289611816,
+      "fs_norm": 0.3564981402740141,
+      "parameter_direction_norm": 0.14756353199481964,
+      "ridge": 7.059730529785156,
+      "ridge_ratio": 1.0,
+      "ridge_scale_rayleigh": 7.059730529785156,
+      "root_jvp_full_consistency": 1.931773060850056e-06,
+      "root_residual": 1.112984299659729,
+      "root_residual_relative": 0.8556876386333104
+    },
+    "state_key": "model_pre_state_dict"
+  }
+}

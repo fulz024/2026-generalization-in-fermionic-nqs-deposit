@@ -1,0 +1,118 @@
+{
+  "fe_top_k": 8192,
+  "k_grid": [
+    128,
+    256,
+    512,
+    1024,
+    4096,
+    8192
+  ],
+  "fe_display_rank_stop": 1048576,
+  "fe_common_holdout": [
+    8193,
+    1048576
+  ],
+  "fe_reference": {
+    "pool_count": 1341028,
+    "pool_full_mps_weight": 0.9353957872691325,
+    "supplied_full_mps_weight": 0.31820477868141805,
+    "supplied_fraction_of_selected_pool": 0.4227532709704411,
+    "trusted_rank_stop": 1048576,
+    "teacher_repeat_threshold": 0.99,
+    "teacher_repeat_rule": "largest contiguous fully unseen half-octave band for which every preceding unseen band passes the threshold",
+    "trusted_rank_rule": "minimum of the contiguous same-D repeat endpoint at 0.999 per band and the cross-D endpoint at 0.99 per band",
+    "same_d_repeat": {
+      "pool_count": 1341028,
+      "pool_full_mps_weight": 0.9353957872691325,
+      "supplied_full_mps_weight": 0.31820477868141805,
+      "supplied_fraction_of_selected_pool": 0.4227532709704411,
+      "trusted_rank_stop": 1048576,
+      "teacher_repeat_threshold": 0.999,
+      "teacher_repeat_rule": "largest contiguous fully unseen half-octave band for which every preceding unseen band passes the threshold",
+      "supplied_fraction_of_selected_pool_legacy_k4096": 0.3401819668339644,
+      "supplied_K": 8192
+    },
+    "cross_d": {
+      "pool_count": 1341028,
+      "pool_full_mps_weight": 0.9353957872691325,
+      "supplied_full_mps_weight": 0.31820477868141805,
+      "supplied_fraction_of_selected_pool": 0.4227532709704411,
+      "trusted_rank_stop": 1048576,
+      "teacher_repeat_threshold": 0.99,
+      "teacher_repeat_rule": "largest contiguous fully unseen half-octave band for which every preceding unseen band passes the threshold",
+      "supplied_fraction_of_selected_pool_legacy_k4096": 0.3401819668339644,
+      "supplied_K": 8192
+    },
+    "supplied_K": 8192,
+    "note": "supplied_fraction_of_selected_pool is the selected-pool wave-function weight in the K=8192 prefix (not determinant count). Nested same_d_repeat/cross_d blocks below may retain older K=4096 fractions for teacher diagnostics."
+  },
+  "fe_supplied_fraction_of_selected_pool": 0.4227532709704411,
+  "n2_top_k": 4096,
+  "n2_common_holdout": [
+    4097,
+    46341
+  ],
+  "n2_reference": {
+    "pool_count": 1215999,
+    "pool_full_mps_weight": 0.9999796458694816,
+    "supplied_full_mps_weight": 0.9966192278351472,
+    "supplied_fraction_of_selected_pool": 0.9966395135658861,
+    "trusted_rank_stop": 46341,
+    "teacher_repeat_threshold": 0.99,
+    "teacher_repeat_rule": "largest contiguous fully unseen half-octave band for which every preceding unseen band passes the threshold",
+    "trusted_rank_rule": "minimum of the contiguous same-D repeat endpoint at 0.999 per band and the cross-D endpoint at 0.99 per band",
+    "same_d_repeat": {
+      "pool_count": 1215999,
+      "pool_full_mps_weight": 0.9999796458694816,
+      "supplied_full_mps_weight": 0.9966192278351472,
+      "supplied_fraction_of_selected_pool": 0.9966395135658861,
+      "trusted_rank_stop": 92682,
+      "teacher_repeat_threshold": 0.999,
+      "teacher_repeat_rule": "largest contiguous fully unseen half-octave band for which every preceding unseen band passes the threshold"
+    },
+    "cross_d": {
+      "pool_count": 1215999,
+      "pool_full_mps_weight": 0.9999796458694816,
+      "supplied_full_mps_weight": 0.9966192278351472,
+      "supplied_fraction_of_selected_pool": 0.9966395135658861,
+      "trusted_rank_stop": 46341,
+      "teacher_repeat_threshold": 0.99,
+      "teacher_repeat_rule": "largest contiguous fully unseen half-octave band for which every preceding unseen band passes the threshold"
+    }
+  },
+  "static_scaffold": {
+    "definition": "independently optimized static and affine-backflow single determinants fitted on the same supplied prefix; the neural checkpoint-error shell is not imposed on these probes",
+    "fe_profile_holdout": [
+      8193,
+      1048576
+    ],
+    "n2_profile_holdout": [
+      4097,
+      46341
+    ],
+    "probes": {
+      "static_determinant": {
+        "label": "static 1-det",
+        "fe_profile_holdout_agreement": 0.6129695853241153,
+        "n2_profile_holdout_agreement": 0.011671271432906114
+      },
+      "affine_backflow": {
+        "label": "affine BF 1-det",
+        "fe_profile_holdout_agreement": 0.9311720272868773,
+        "n2_profile_holdout_agreement": 0.02536206799680302
+      }
+    },
+    "fe_profile_holdout_agreement": 0.9311720272868773,
+    "n2_profile_holdout_agreement": 0.02536206799680302
+  },
+  "row_counts": {
+    "fe_band_metrics.csv": 470,
+    "fe_reference_bands.csv": 41,
+    "fe_k_scan.csv": 62,
+    "n2_band_metrics.csv": 380,
+    "n2_k_scan.csv": 51,
+    "n2_reference_bands.csv": 41
+  },
+  "preview_control": "static_and_affine_single_determinants"
+}

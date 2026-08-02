@@ -1,0 +1,11 @@
+ansatz,trainable_parameter_count
+mlp_direct,675608
+cnn_direct,675608
+rnn_direct,675608
+neural_jastrow,675608
+transformer_direct,664836
+transformer_direct_phase,675457
+transformer_nnbf,652080
+nnbf,650432
+mps,644640
+visible_corrected_slater,0

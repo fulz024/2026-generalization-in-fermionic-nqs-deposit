@@ -1,0 +1,12 @@
+{
+  "arm": "matrix_product_backflow_d64",
+  "orderings": [
+    "physical",
+    "random_04",
+    "random_05",
+    "even_odd"
+  ],
+  "matched_shell_files": 20,
+  "expected_files": 20,
+  "validation_errors": []
+}
