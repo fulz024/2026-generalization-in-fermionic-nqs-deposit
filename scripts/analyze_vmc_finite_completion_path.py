@@ -29,7 +29,10 @@ from analyze_vmc_direct_jvp_ledger import (  # noqa: E402
     rayleigh,
 )
 from evaluate_checkpoints import build_model  # noqa: E402
-from evaluate_vmc_completion_checkpoints import hamiltonian_action  # noqa: E402
+from evaluate_vmc_completion_checkpoints import (  # noqa: E402
+    half_octave_bands,
+    hamiltonian_action,
+)
 
 
 DEFAULT_EPOCHS = (1, 10, 20, 50, 100, 500, 2000)
@@ -44,6 +47,15 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument(
+        "--paired-run-dir",
+        type=Path,
+        default=None,
+        help=(
+            "Paired architecture run used with this run to define an "
+            "identical never-sampled support."
+        ),
+    )
     parser.add_argument("--reference-dir", type=Path, required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--epochs", type=comma_ints, default=DEFAULT_EPOCHS)
@@ -73,6 +85,16 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--chunk-size", type=int, default=4096)
+    parser.add_argument(
+        "--common-never-bands",
+        action="store_true",
+        help=(
+            "Also integrate the finite gain and path alignment in target-rank "
+            "bands outside --fixed-k that have not been sampled by either "
+            "paired run through the current update."
+        ),
+    )
+    parser.add_argument("--fixed-k", type=int, default=512)
     return parser.parse_args()
 
 
@@ -162,6 +184,11 @@ def main() -> None:
 
     config_path = args.config.resolve()
     run_dir = args.run_dir.resolve()
+    paired_run_dir = (
+        args.paired_run_dir.resolve()
+        if args.paired_run_dir is not None
+        else None
+    )
     reference_dir = args.reference_dir.resolve()
     out_dir = args.out_dir.resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -175,12 +202,49 @@ def main() -> None:
     with np.load(reference_dir / "basis.npz") as payload:
         basis_states = payload["states"].astype(np.uint64, copy=False)
     h_action = hamiltonian_action(reference_dir)
-    current, _, _ = histories_and_future(
+    current, history, _ = histories_and_future(
         run_dir,
         basis_states=basis_states,
         epochs=args.epochs,
         future_window=0,
     )
+
+    paired_history = history
+    band_definitions: list[tuple[str, float, int, int]] = []
+    band_masks: dict[str, np.ndarray] = {}
+    fixed_hidden: np.ndarray | None = None
+    if args.common_never_bands:
+        if args.fixed_k <= 0 or args.fixed_k >= basis_states.size:
+            raise ValueError("--fixed-k must lie inside the Hilbert space")
+        if paired_run_dir is None:
+            raise ValueError(
+                "--common-never-bands requires --paired-run-dir"
+            )
+        _, paired_history, _ = histories_and_future(
+            paired_run_dir,
+            basis_states=basis_states,
+            epochs=args.epochs,
+            future_window=0,
+        )
+        target = np.load(reference_dir / "psi0.npy").astype(
+            np.float64,
+            copy=False,
+        )
+        target /= np.linalg.norm(target)
+        if target.size != basis_states.size:
+            raise ValueError("basis and target dimensions differ")
+        target_ranked = np.argsort(-np.square(target), kind="stable")
+        fixed_hidden = np.ones(basis_states.size, dtype=bool)
+        fixed_hidden[target_ranked[: args.fixed_k]] = False
+        band_definitions = [
+            item
+            for item in half_octave_bands(int(basis_states.size))
+            if item[2] >= args.fixed_k
+        ]
+        for label, _, start, stop in band_definitions:
+            mask = np.zeros(basis_states.size, dtype=bool)
+            mask[target_ranked[start:stop]] = True
+            band_masks[label] = mask
 
     scaffold: np.ndarray | None = None
     if args.scaffold is not None:
@@ -203,6 +267,7 @@ def main() -> None:
     summary_rows: list[dict[str, Any]] = []
     node_rows: list[dict[str, Any]] = []
     convergence_rows: list[dict[str, Any]] = []
+    common_never_band_rows: list[dict[str, Any]] = []
     highest_order = max(args.quadrature_orders)
 
     for epoch in args.epochs:
@@ -214,6 +279,17 @@ def main() -> None:
         post = payload["model_post_state_dict"]
         root = current[epoch]
         external = ~root
+        common_never: np.ndarray | None = None
+        common_never_band_indices: dict[str, np.ndarray] = {}
+        if args.common_never_bands:
+            if fixed_hidden is None:
+                raise RuntimeError("common-never fixed support was not built")
+            common_history = history[epoch] | paired_history[epoch]
+            common_never = fixed_hidden & ~common_history
+            common_never_band_indices = {
+                label: np.flatnonzero(common_never & band_masks[label])
+                for label, _, _, _ in band_definitions
+            }
         external_scaffold_basis: np.ndarray | None = None
         external_scaffold_rank = 0
         external_scaffold_condition = float("nan")
@@ -264,6 +340,19 @@ def main() -> None:
                 "gain_external_rhf_tangentized": 0.0,
                 "gain_external_rhf_subspace": 0.0,
             }
+            common_never_integrals = {
+                "inner": 0.0,
+                "ideal_norm_sq": 0.0,
+                "tangent_norm_sq": 0.0,
+            }
+            band_integrals = {
+                label: {
+                    "inner": 0.0,
+                    "ideal_norm_sq": 0.0,
+                    "tangent_norm_sq": 0.0,
+                }
+                for label, _, _, _ in band_definitions
+            }
 
             for node_index, (alpha, weight) in enumerate(zip(nodes, weights)):
                 anchor = interpolated_state(pre, post, float(alpha))
@@ -285,6 +374,34 @@ def main() -> None:
                 d_external = 2.0 * float(
                     np.dot(ideal[external], tangent[external])
                 )
+                if common_never is not None:
+                    ideal_common = ideal[common_never]
+                    tangent_common = tangent[common_never]
+                    common_never_integrals["inner"] += float(weight) * float(
+                        np.dot(ideal_common, tangent_common)
+                    )
+                    common_never_integrals["ideal_norm_sq"] += (
+                        float(weight) * float(np.dot(ideal_common, ideal_common))
+                    )
+                    common_never_integrals["tangent_norm_sq"] += (
+                        float(weight)
+                        * float(np.dot(tangent_common, tangent_common))
+                    )
+                    for label, indices in common_never_band_indices.items():
+                        ideal_band = ideal[indices]
+                        tangent_band = tangent[indices]
+                        band_integrals[label]["inner"] += (
+                            float(weight)
+                            * float(np.dot(ideal_band, tangent_band))
+                        )
+                        band_integrals[label]["ideal_norm_sq"] += (
+                            float(weight)
+                            * float(np.dot(ideal_band, ideal_band))
+                        )
+                        band_integrals[label]["tangent_norm_sq"] += (
+                            float(weight)
+                            * float(np.dot(tangent_band, tangent_band))
+                        )
                 psi_external = psi[external]
                 tangent_external = tangent[external]
                 ideal_external = ideal[external]
@@ -390,6 +507,58 @@ def main() -> None:
                         }
                     )
 
+            if common_never is not None:
+                band_gain_sum = 0.0
+                for label, center, start, stop in band_definitions:
+                    values = band_integrals[label]
+                    denominator = math.sqrt(
+                        values["ideal_norm_sq"]
+                        * values["tangent_norm_sq"]
+                    )
+                    gain = 2.0 * values["inner"]
+                    band_gain_sum += gain
+                    common_never_band_rows.append(
+                        {
+                            "epoch": int(epoch),
+                            "quadrature_order": int(order),
+                            "band": label,
+                            "rank_center": float(center),
+                            "rank_start": int(start),
+                            "rank_stop": int(stop),
+                            "common_never_count": int(
+                                common_never_band_indices[label].size
+                            ),
+                            "integrated_inner": values["inner"],
+                            "finite_gain": gain,
+                            "integrated_ideal_norm_sq": values[
+                                "ideal_norm_sq"
+                            ],
+                            "integrated_tangent_norm_sq": values[
+                                "tangent_norm_sq"
+                            ],
+                            "path_alignment": (
+                                values["inner"] / denominator
+                                if denominator > 0.0
+                                else float("nan")
+                            ),
+                        }
+                    )
+                common_gain = 2.0 * common_never_integrals["inner"]
+                band_closure = band_gain_sum - common_gain
+                if abs(band_closure) > 5.0e-11:
+                    raise ValueError(
+                        "common-never band gains do not close: "
+                        f"epoch={epoch} order={order} error={band_closure}"
+                    )
+                integrals["gain_common_never"] = common_gain
+                integrals["common_never_integrated_ideal_norm_sq"] = (
+                    common_never_integrals["ideal_norm_sq"]
+                )
+                integrals["common_never_integrated_tangent_norm_sq"] = (
+                    common_never_integrals["tangent_norm_sq"]
+                )
+                integrals["common_never_band_gain_closure"] = band_closure
+
             integrated_total = (
                 integrals["gain_root"] + integrals["gain_external"]
             )
@@ -493,6 +662,11 @@ def main() -> None:
     write_csv(out_dir / "finite_completion_summary.csv", summary_rows)
     write_csv(out_dir / "finite_completion_nodes.csv", node_rows)
     write_csv(out_dir / "quadrature_convergence.csv", convergence_rows)
+    if args.common_never_bands:
+        write_csv(
+            out_dir / "finite_common_never_bands.csv",
+            common_never_band_rows,
+        )
     metadata = {
         "analysis": "finite VMC completion by path-integrated exact energy derivative",
         "config": str(config_path),
@@ -503,6 +677,21 @@ def main() -> None:
         "state_count": int(basis_states.size),
         "root_definition": "unique configurations in the generating batch",
         "external_definition": "all basis configurations outside the sampled roots",
+        "paired_run_dir": str(paired_run_dir) if paired_run_dir else None,
+        "fixed_k": int(args.fixed_k),
+        "common_never_definition": (
+            "outside the target-ranked fixed visible set and absent from the "
+            "sampled-root histories of both paired architectures through t"
+            if args.common_never_bands
+            else None
+        ),
+        "common_never_band_attribution": (
+            "the same path-integrated normalized-state energy derivative as "
+            "the root/external ledger, restricted at every quadrature node "
+            "to paired common-never target-rank bands"
+            if args.common_never_bands
+            else None
+        ),
         "identity": "G_root + G_external = E_pre - E_post",
         "external_shape_definition": (
             "at each quadrature node, remove from the normalized external "

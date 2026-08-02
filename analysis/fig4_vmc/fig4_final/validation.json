@@ -4,6 +4,20 @@
   "band_cosine_comparisons": 70,
   "band_cosine_nnbf_wins": 70,
   "failed_match_batches": 6,
+  "finite_common_never_comparisons": 70,
+  "finite_common_never_max_order8_order4_alignment_difference": 0.0014918376198067018,
+  "finite_common_never_max_order8_order4_gain_relative_difference": 0.011240825994214148,
+  "finite_common_never_nnbf_wins": 70,
+  "finite_common_never_seed_means": {
+    "mlp_direct": {
+      "finite_gain": 0.43441099729128174,
+      "path_alignment": 0.06185660786221651
+    },
+    "nnbf": {
+      "finite_gain": 1.827408984079014,
+      "path_alignment": 0.3376877355727738
+    }
+  },
   "main_panel_b_asinh_width_Ha": 0.001,
   "main_panel_b_log_uniform_epochs": [
     1,

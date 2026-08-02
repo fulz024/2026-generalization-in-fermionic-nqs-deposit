@@ -27,6 +27,10 @@ JVP_RUNS = (
     ROOT
     / "analysis/fig4_vmc/direct_jvp"
 )
+FINITE_COMMON_NEVER_RUNS = (
+    ROOT
+    / "analysis/fig4_vmc/finite_common_never"
+)
 MATCHED_RUNS = (
     ROOT
     / "analysis/fig4_vmc/matched_control"
@@ -145,6 +149,74 @@ def load_band_jvp() -> pd.DataFrame:
     return pd.DataFrame(pooled)
 
 
+def load_band_finite_common_never() -> tuple[pd.DataFrame, pd.DataFrame]:
+    rows = []
+    for path in sorted(
+        FINITE_COMMON_NEVER_RUNS.glob("*/finite_common_never_bands.csv")
+    ):
+        architecture, seed = parse_run(path)
+        current = pd.read_csv(path)
+        current["architecture"] = architecture
+        current["seed"] = seed
+        rows.append(current)
+
+    frozen_path = AUDIT / "panel_b_finite_common_never.csv"
+    if not rows:
+        if not frozen_path.exists():
+            raise FileNotFoundError(
+                "no finite common-never runs or frozen pooled table"
+            )
+        frozen_orders = AUDIT / "panel_b_finite_common_never_quadrature.csv"
+        order_table = (
+            pd.read_csv(frozen_orders)
+            if frozen_orders.exists()
+            else pd.DataFrame()
+        )
+        return pd.read_csv(frozen_path), order_table
+
+    raw = pd.concat(rows, ignore_index=True)
+    pooled_by_order = (
+        raw.groupby(
+            [
+                "architecture",
+                "seed",
+                "quadrature_order",
+                "rank_center",
+            ],
+            as_index=False,
+        )
+        .agg(
+            integrated_inner=("integrated_inner", "sum"),
+            finite_gain=("finite_gain", "sum"),
+            integrated_ideal_norm_sq=(
+                "integrated_ideal_norm_sq",
+                "sum",
+            ),
+            integrated_tangent_norm_sq=(
+                "integrated_tangent_norm_sq",
+                "sum",
+            ),
+            common_never_count_min=("common_never_count", "min"),
+            common_never_count_max=("common_never_count", "max"),
+            update_count=("epoch", "nunique"),
+        )
+        .sort_values(
+            ["architecture", "seed", "quadrature_order", "rank_center"]
+        )
+    )
+    denominator = np.sqrt(
+        pooled_by_order["integrated_ideal_norm_sq"]
+        * pooled_by_order["integrated_tangent_norm_sq"]
+    )
+    pooled_by_order["path_alignment"] = (
+        pooled_by_order["integrated_inner"] / denominator
+    )
+    pooled = pooled_by_order[
+        pooled_by_order["quadrature_order"].eq(8)
+    ].copy()
+    return pooled, pooled_by_order
+
+
 def load_ledgers() -> pd.DataFrame:
     rows = []
     for path in sorted(JVP_RUNS.glob("*/ledger_rows.csv")):
@@ -261,6 +333,8 @@ def load_matched_ablation() -> tuple[pd.DataFrame, pd.DataFrame]:
 def validate(
     trajectory: pd.DataFrame,
     band_jvp: pd.DataFrame,
+    band_finite: pd.DataFrame,
+    band_finite_orders: pd.DataFrame,
     ledger: pd.DataFrame,
     phases: pd.DataFrame,
     ablation: pd.DataFrame,
@@ -329,6 +403,78 @@ def validate(
     band_wins = int((band_pairs["nnbf"] > band_pairs["mlp_direct"]).sum())
     if band_wins != len(band_pairs):
         raise ValueError("NNBF did not win every paired seed-band JVP cosine")
+
+    finite_pairs = band_finite.pivot_table(
+        index=["seed", "rank_center"],
+        columns="architecture",
+        values="path_alignment",
+    )
+    finite_wins = int(
+        (finite_pairs["nnbf"] > finite_pairs["mlp_direct"]).sum()
+    )
+    if len(finite_pairs) != 70 or finite_wins != len(finite_pairs):
+        raise ValueError(
+            "expected NNBF to win all 70 paired finite-path alignments"
+        )
+    for architecture in ARCHITECTURES:
+        current = band_finite[band_finite["architecture"].eq(architecture)]
+        if current["seed"].nunique() != 5:
+            raise ValueError(
+                f"unexpected finite common-never seeds for {architecture}"
+            )
+        if not current["update_count"].eq(13).all():
+            raise ValueError(
+                f"unexpected saved-update count for {architecture}"
+            )
+
+    per_seed_finite = (
+        band_finite.groupby(["architecture", "seed"], as_index=False)
+        .agg(
+            finite_gain=("finite_gain", "sum"),
+            integrated_inner=("integrated_inner", "sum"),
+            integrated_ideal_norm_sq=("integrated_ideal_norm_sq", "sum"),
+            integrated_tangent_norm_sq=("integrated_tangent_norm_sq", "sum"),
+        )
+    )
+    per_seed_finite["path_alignment"] = per_seed_finite[
+        "integrated_inner"
+    ] / np.sqrt(
+        per_seed_finite["integrated_ideal_norm_sq"]
+        * per_seed_finite["integrated_tangent_norm_sq"]
+    )
+    finite_summary = (
+        per_seed_finite.groupby("architecture")[["finite_gain", "path_alignment"]]
+        .mean()
+        .to_dict(orient="index")
+    )
+
+    max_quadrature_alignment_difference = float("nan")
+    max_quadrature_gain_relative_difference = float("nan")
+    if not band_finite_orders.empty:
+        order_pairs = band_finite_orders.pivot_table(
+            index=["architecture", "seed", "rank_center"],
+            columns="quadrature_order",
+            values=["path_alignment", "finite_gain"],
+        )
+        if 4 not in order_pairs.columns.levels[1] or 8 not in order_pairs.columns.levels[1]:
+            raise ValueError("finite common-never quadrature audit needs orders 4 and 8")
+        alignment_difference = (
+            order_pairs[("path_alignment", 8)]
+            - order_pairs[("path_alignment", 4)]
+        ).abs()
+        gain_difference = (
+            order_pairs[("finite_gain", 8)]
+            - order_pairs[("finite_gain", 4)]
+        ).abs()
+        gain_scale = order_pairs[("finite_gain", 8)].abs().clip(lower=1.0e-14)
+        max_quadrature_alignment_difference = float(alignment_difference.max())
+        max_quadrature_gain_relative_difference = float(
+            (gain_difference / gain_scale).max()
+        )
+        if max_quadrature_alignment_difference > 2.0e-3:
+            raise ValueError("finite common-never path alignment is not converged")
+        if max_quadrature_gain_relative_difference > 1.5e-2:
+            raise ValueError("finite common-never gain is not converged")
 
     scatter_summary: dict[str, dict[str, dict[str, float]]] = {}
     for phase, lower, upper in (
@@ -402,6 +548,15 @@ def validate(
         ),
         "band_cosine_nnbf_wins": band_wins,
         "band_cosine_comparisons": int(len(band_pairs)),
+        "finite_common_never_nnbf_wins": finite_wins,
+        "finite_common_never_comparisons": int(len(finite_pairs)),
+        "finite_common_never_seed_means": finite_summary,
+        "finite_common_never_max_order8_order4_alignment_difference": (
+            max_quadrature_alignment_difference
+        ),
+        "finite_common_never_max_order8_order4_gain_relative_difference": (
+            max_quadrature_gain_relative_difference
+        ),
         "ablation_gain_nnbf_wins": nnbf_wins,
         "ablation_gain_comparisons": int(len(paired)),
         "mean_descent_removed_fraction": removal_fraction,
@@ -443,27 +598,27 @@ def plot_energy(ax: plt.Axes, trajectory: pd.DataFrame) -> None:
     panel_label(ax, "a", "Individual VMC trajectories")
 
 
-def plot_band_jvp_control(ax: plt.Axes, data: pd.DataFrame) -> None:
+def plot_band_finite_common_never(ax: plt.Axes, data: pd.DataFrame) -> None:
     for architecture in ARCHITECTURES:
         current = data[data["architecture"].eq(architecture)]
         for _, seed_rows in current.groupby("seed"):
             seed_rows = seed_rows.sort_values("rank_center")
             ax.plot(
                 seed_rows["rank_center"],
-                seed_rows["pooled_cosine"],
+                seed_rows["path_alignment"],
                 color=COLORS[architecture],
                 linewidth=0.55,
                 alpha=0.22,
                 zorder=1,
             )
         mean = (
-            current.groupby("rank_center", as_index=False)["pooled_cosine"]
+            current.groupby("rank_center", as_index=False)["path_alignment"]
             .mean()
             .sort_values("rank_center")
         )
         ax.plot(
             mean["rank_center"],
-            mean["pooled_cosine"],
+            mean["path_alignment"],
             color=COLORS[architecture],
             marker=MARKERS[architecture],
             markersize=2.5,
@@ -473,20 +628,26 @@ def plot_band_jvp_control(ax: plt.Axes, data: pd.DataFrame) -> None:
         )
 
     totals = (
-        data.groupby(["architecture", "seed"])["cumulative_DA"]
+        data.groupby(["architecture", "seed"])["finite_gain"]
         .sum()
         .groupby("architecture")
         .mean()
     )
+    paired = data.pivot_table(
+        index=["seed", "rank_center"],
+        columns="architecture",
+        values="path_alignment",
+    )
+    wins = int((paired["nnbf"] > paired["mlp_direct"]).sum())
     ax.text(
         0.97,
         0.96,
         "\n".join(
             [
-                r"$\sum_{t\leq20}D_{A,\rm probe}^{\rm tan}$ [Ha]",
+                r"$\sum_{t,B}G^{\rm CN}_{B,t}$ [Ha]",
                 rf"MLP {totals['mlp_direct']:.2f}",
                 rf"NNBF {totals['nnbf']:.2f}",
-                r"NNBF $>$ MLP: 70/70",
+                rf"NNBF $>$ MLP: {wins}/{len(paired)}",
             ]
         ),
         transform=ax.transAxes,
@@ -497,14 +658,12 @@ def plot_band_jvp_control(ax: plt.Axes, data: pd.DataFrame) -> None:
     )
     ax.set(
         xlabel=r"target-rank band center $\log_2 r$",
-        ylabel=r"direct-JVP cosine on $A_t$",
+        ylabel=r"finite-path alignment on $N_t$",
         xlim=(8.8, 15.7),
-        ylim=(0.07, 0.52),
         xticks=[9, 11, 13, 15],
     )
     ax.legend(frameon=False, loc="lower left", handlelength=1.6)
     style_axes(ax)
-    ax.set_title("Band-resolved off-prefix probe", loc="left", pad=3.0)
 
 
 def plot_root_outside_scatter(ax: plt.Axes, ledger: pd.DataFrame) -> None:
@@ -955,15 +1114,32 @@ def plot_ablation(ax: plt.Axes, data: pd.DataFrame) -> None:
 def main() -> None:
     trajectory = pd.read_csv(TRAJECTORY)
     band_jvp = load_band_jvp()
+    band_finite, band_finite_orders = load_band_finite_common_never()
     ledger = load_ledgers()
     phases = summarize_phases(ledger)
     ablation, matches = load_matched_ablation()
     validation = validate(
-        trajectory, band_jvp, ledger, phases, ablation, matches
+        trajectory,
+        band_jvp,
+        band_finite,
+        band_finite_orders,
+        ledger,
+        phases,
+        ablation,
+        matches,
     )
 
     AUDIT.mkdir(parents=True, exist_ok=True)
     band_jvp.to_csv(AUDIT / "panel_b_direct_jvp.csv", index=False)
+    band_finite.to_csv(
+        AUDIT / "panel_b_finite_common_never.csv",
+        index=False,
+    )
+    if not band_finite_orders.empty:
+        band_finite_orders.to_csv(
+            AUDIT / "panel_b_finite_common_never_quadrature.csv",
+            index=False,
+        )
     scatter_audit = ledger[
         [
             "architecture",
@@ -1036,7 +1212,7 @@ def main() -> None:
         }
     )
     control_fig, control_ax = plt.subplots(figsize=(3.45, 2.45))
-    plot_band_jvp_control(control_ax, band_jvp)
+    plot_band_finite_common_never(control_ax, band_finite)
     control_fig.subplots_adjust(
         left=0.17, right=0.98, bottom=0.20, top=0.91
     )

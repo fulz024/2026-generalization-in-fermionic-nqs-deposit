@@ -62,8 +62,11 @@
     "band_control": {
       "figure": "figures/figS_band_control.pdf",
       "script": "scripts/plot_figS_band_control.py",
+      "finite_step_analyzer": "scripts/analyze_vmc_finite_completion_path.py",
       "trajectory": "analysis/fig4_vmc/positive_bridge/certified_completion_trajectory.csv",
       "direct_jvp_tables": "analysis/fig4_vmc/direct_jvp",
+      "finite_common_never_table": "analysis/fig4_vmc/fig4_final/panel_b_finite_common_never.csv",
+      "finite_common_never_quadrature": "analysis/fig4_vmc/fig4_final/panel_b_finite_common_never_quadrature.csv",
       "matched_control_tables": "analysis/fig4_vmc/matched_control"
     }
   },
