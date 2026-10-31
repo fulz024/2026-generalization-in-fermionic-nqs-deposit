@@ -18,27 +18,51 @@ import prl_palette as palette
 
 
 ROOT = Path(__file__).resolve().parents[1]
-COMPONENTS = ROOT / "analysis/fig2_components"
-HEADS = ROOT / "analysis/fig2_head_swaps"
-ATTRIBUTION = ROOT / "analysis/fig2_support/band_attribution.csv"
-MPS = ROOT / "analysis/fig2_mps_ordering"
-MPBS = ROOT / "analysis/fig2_mpbs"
-MPS_ACTIVE_REPLICATION = ROOT / "analysis/fig2_support/matched_arm_replication"
-HUB34_MPS_BURDEN = ROOT / "analysis/fig2_support/hub34_mps_burden.csv"
-HUB34_MIDORDER_BANDS = ROOT / "analysis/fig2_support/hub34_midorder_bands.csv"
-HUB34_MIDORDER_SECTORS = ROOT / "analysis/fig2_support/hub34_midorder_sectors.csv"
-HUB34_PHYSICAL_SECTORS = ROOT / "analysis/fig2_support/hub34_physical_sectors.csv"
-HUB34_NNFMPS_SECTORS = ROOT / "analysis/fig2_support/hub34_nnfmps_sectors.csv"
-HUB34_MPBS = ROOT / "analysis/fig2_support/hub34_mpbs_per_seed.csv"
+COMPONENTS = ROOT / "analysis/fig2_visible_corrected_components"
+HEADS = ROOT / "analysis/fig2_exact_nnbf_heads_summary"
+ATTRIBUTION = (
+    ROOT / "analysis/s3_main_checkpoint_attribution/band_attribution.csv"
+)
+MPS = ROOT / "analysis/fig2c_mps_neuralization_ordering_20260730"
+MPBS = ROOT / "analysis/fig2c_mpbs_all_neighbors_20260731"
+MPS_ACTIVE_REPLICATION = (
+    ROOT
+    / "analysis/fig2c_active_mps_carrier_pilot_20260731"
+    / "matched_arm_replication"
+)
+HUB34_MPS_BURDEN = (
+    ROOT
+    / "analysis/fig2c_active_mps_carrier_pilot_20260731"
+    / "hub34_d64_compressibility"
+    / "order_compressibility.csv"
+)
+HUB34_MIDORDER_BANDS = (
+    ROOT / "analysis/fig2d_hub34_midorder_20260731/half_octave_metrics.csv"
+)
+HUB34_MIDORDER_SECTORS = (
+    ROOT / "analysis/fig2d_hub34_midorder_20260731/sector_metrics.csv"
+)
+HUB34_PHYSICAL_SECTORS = (
+    ROOT / "analysis/fig2c_hub34_component_replication_20260731/sector_metrics.csv"
+)
+HUB34_NNFMPS_SECTORS = (
+    ROOT / "analysis/half_octave_completion_fig1_nnfmps_d64/sector_metrics.csv"
+)
+HUB34_MPBS = (
+    ROOT
+    / "analysis"
+    / "fig2d_hub34_mpbs_pair_resolved_20260731"
+    / "per_seed_metrics.csv"
+)
 HUB34_MIDORDER_BURDEN = 0.5833356945306273
 # Main-text representatives are chosen from the target-only D=64 Schmidt-tail
 # burden: the least disrupted random order, an intermediate random order, and
 # the deterministic even--odd extreme.  The complete ordering scan remains in
 # the source tables and Supplemental analysis.
 MAIN_MPS_ORDERINGS = ("physical", "random_04", "random_05", "even_odd")
-H10_COMPLETION = ROOT / "analysis/figS_h10/h10_supervised_completion.csv"
-H10_DEMAND = ROOT / "analysis/figS_h10/h10_completion_demand.csv"
-OUT = ROOT / "figures/fig2_structure_mechanism"
+H10_COMPLETION = ROOT / "analysis/vmc_fig4/h10_supervised_completion.csv"
+H10_DEMAND = ROOT / "analysis/vmc_fig4/h10_completion_demand.csv"
+OUT = ROOT / "paper/figures/main/fig2_structure_mechanism"
 
 
 COLORS = {
@@ -69,15 +93,16 @@ def plot_readout_component_map(ax: plt.Axes) -> None:
     per_seed = pd.read_csv(COMPONENTS / "per_seed_metrics.csv")
     readout_seed = pd.read_csv(HEADS / "per_seed_metrics.csv")
     categories = [
-        "additive",
+        "additive\n/ MLP",
         "product",
-        "det.",
+        "det.\n/ NNBF",
         "neural\nJastrow",
         "Fermi\nsea",
         "simple\nBF",
     ]
     component_specs = (
         (0.00, "visible_corrected_direct_mlp", COLORS["direct"]),
+        (2.00, "visible_corrected_nnbf", COLORS["nnbf"]),
         (3.00, "visible_corrected_neural_jastrow", COLORS["jastrow"]),
         (4.00, "visible_corrected_slater", COLORS["aux"]),
         (5.00, "visible_corrected_simple_backflow", COLORS["aux_dark"]),
@@ -193,7 +218,7 @@ def plot_determinant_component_attribution(ax: plt.Axes) -> None:
         ("C_total", r"NNBF total", COLORS["nnbf"]),
         (
             "C_scaffold_carried",
-            r"Fermi-sea part",
+            r"Slater-aligned part",
             COLORS["determinant_component"],
         ),
     ):
@@ -240,7 +265,7 @@ def plot_determinant_component_attribution(ax: plt.Axes) -> None:
         loc="lower left",
         handlelength=1.6,
     )
-    panel_label(ax, "b", "NNBF agreement follows its Fermi-sea component")
+    panel_label(ax, "b", "NNBF agreement follows its Slater-aligned component")
     style_axes(ax)
 
 

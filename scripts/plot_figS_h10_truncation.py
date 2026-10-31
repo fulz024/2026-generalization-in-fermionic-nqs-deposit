@@ -14,12 +14,12 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TRUNCATION = ROOT / "analysis/figS_h10/h10_truncation_curve.csv"
-DEMAND = ROOT / "analysis/figS_h10/h10_completion_demand.csv"
-SUPERVISED = ROOT / "analysis/figS_h10/h10_supervised_completion.csv"
-ENDPOINTS = ROOT / "analysis/figS_h10/h10_vmc_endpoints.csv"
-OUT = ROOT / "figures/figS_h10_bridge"
-OUT_TRUNCATION = ROOT / "figures/figS_h10_truncation_curve"
+TRUNCATION = ROOT / "analysis/vmc_fig4/h10_truncation_curve.csv"
+DEMAND = ROOT / "analysis/vmc_fig4/h10_completion_demand.csv"
+SUPERVISED = ROOT / "analysis/vmc_fig4/h10_supervised_completion.csv"
+ENDPOINTS = ROOT / "analysis/vmc_fig4/h10_vmc_endpoints.csv"
+OUT = ROOT / "paper/figures/main/figS_h10_bridge"
+OUT_TRUNCATION = ROOT / "paper/figures/main/figS_h10_truncation_curve"
 
 COLORS = {
     "canonical": "#2C6EAA",

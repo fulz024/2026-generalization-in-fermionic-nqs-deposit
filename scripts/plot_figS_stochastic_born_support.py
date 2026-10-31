@@ -15,32 +15,32 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "analysis/si_stochastic_born_support/seed_metrics.csv"
+INPUT = ROOT / "analysis/gate_f_nnfmps_20260802/seed_metrics.csv"
 REFERENCE = ROOT / "reference/hub3x4_U4_t1_Nup6_Ndn6_pbc/psi0.npy"
-OUT = ROOT / "figures/figS_stochastic_born_support.pdf"
-REPORT = ROOT / "analysis/si_stochastic_born_support/si_figure_report.json"
+OUT = ROOT / "paper/figures/main/figS_stochastic_born_support.pdf"
+REPORT = ROOT / "analysis/gate_f_nnfmps_20260802/si_figure_report.json"
 
 ORDER = [
     "mlp_direct",
-    "mps",
+    "neuralized_mps_d64_w18",
     "nnbf",
     "transformer_nnbf",
 ]
 LABELS = {
     "mlp_direct": "direct MLP",
-    "mps": "NN-fMPS",
+    "neuralized_mps_d64_w18": "NN-fMPS",
     "nnbf": "NNBF",
     "transformer_nnbf": "Transformer-NNBF",
 }
 COLORS = {
     "mlp_direct": "#4477AA",
-    "mps": "#228833",
+    "neuralized_mps_d64_w18": "#228833",
     "nnbf": "#EE7733",
     "transformer_nnbf": "#F3A36B",
 }
 MARKERS = {
     "mlp_direct": "o",
-    "mps": "D",
+    "neuralized_mps_d64_w18": "D",
     "nnbf": "s",
     "transformer_nnbf": "D",
 }
@@ -71,20 +71,12 @@ def main() -> None:
     if not np.all(expected.to_numpy() == 6):
         raise RuntimeError(f"expected six fits per ansatz and K:\n{expected}")
 
-    if REFERENCE.exists():
-        target = np.asarray(np.load(REFERENCE), dtype=np.float64)
-        target /= np.linalg.norm(target)
-        ranked_weights = np.sort(np.square(target))[::-1]
-        ranked_mass = {
-            support: float(np.sum(ranked_weights[:support]))
-            for support in supports
-        }
-    else:
-        previous_report = json.loads(REPORT.read_text(encoding="utf-8"))
-        stored_mass = previous_report["ranked_prefix_mass"]
-        ranked_mass = {
-            support: float(stored_mass[str(support)]) for support in supports
-        }
+    target = np.asarray(np.load(REFERENCE), dtype=np.float64)
+    target /= np.linalg.norm(target)
+    ranked_weights = np.sort(np.square(target))[::-1]
+    ranked_mass = {
+        support: float(np.sum(ranked_weights[:support])) for support in supports
+    }
 
     plt.rcParams.update(
         {

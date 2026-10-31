@@ -19,21 +19,21 @@ import plot_fig4_finite as base
 
 OUT = (
     base.ROOT
-    / "figures/fig4_vmc"
+    / "paper/figures/main/fig4_vmc"
 )
 AUDIT = (
     base.ROOT
-    / "analysis/fig4_vmc"
+    / "analysis/vmc_completion_causal_20260725"
     / "fig4_completion_conflict"
 )
 CLOSEST_SLATER = (
     base.ROOT
-    / "analysis/fig4_vmc"
+    / "analysis/vmc_completion_causal_20260725"
     / "closest_slater_visible_tangent_loggrid"
 )
 RANDOM_SUBSPACE_NULL = (
     base.ROOT
-    / "analysis/fig4_vmc"
+    / "analysis/vmc_completion_causal_20260725"
     / "closest_slater_random_subspace_null"
     / "order8/nnbf"
 )

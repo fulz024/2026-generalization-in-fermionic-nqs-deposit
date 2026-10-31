@@ -21,7 +21,7 @@ import prl_palette as palette
 
 ROOT = Path(__file__).resolve().parents[1]
 ANALYSIS = ROOT / "analysis/fig3_selected_spaces"
-OUT = ROOT / "figures/fig3_selected_spaces"
+OUT = ROOT / "paper/figures/main/fig3_selected_spaces"
 COLORS = {
     "transformer_direct_phase": palette.DIRECT,
     "static_determinant": palette.PHYSICAL_BASELINE,
@@ -621,7 +621,7 @@ def main() -> None:
             linestyle=(0, (1.8, 1.5)),
             linewidth=0.85,
             alpha=0.55,
-            label="DMRG reference",
+            label=r"DMRG cross-$D$ agreement",
         )
     )
     fig.legend(

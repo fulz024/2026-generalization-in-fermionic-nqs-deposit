@@ -1,0 +1,4 @@
+# Preserve bytes covered by the reproducibility manifest on every platform.
+analysis/** -text
+reference/** -text
+scripts/** -text

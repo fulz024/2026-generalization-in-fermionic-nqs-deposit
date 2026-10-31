@@ -54,7 +54,7 @@
   "fit_patience": 200,
   "fit_restarts": 3,
   "fit_steps": 1000,
-  "fixed_scaffold_subspace": "/data.",
+  "fixed_scaffold_subspace": ".",
   "gain_fraction_definition": "path-integrated exact external energy derivative carried by the projected tangent divided by total external gain",
   "interpretation_guard": "gain fraction must be compared with motion fraction; gain enrichment above motion enrichment is evidence that the fitted Slater channel selectively carries useful external descent",
   "motion_fraction_sq_definition": "path integral of projected external tangent squared norm divided by the path integral of total external tangent squared norm",

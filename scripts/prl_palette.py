@@ -1,4 +1,4 @@
-"""Role-based color language shared by the main and supplemental figures."""
+"""Role-based color language shared by the PRL main figures."""
 
 # Ansatz families.  Hue encodes the coefficient map throughout the paper;
 # line style and marker distinguish members within a family.

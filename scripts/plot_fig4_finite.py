@@ -23,11 +23,12 @@ import prl_palette as palette
 ROOT = Path(__file__).resolve().parents[1]
 FINITE_RUNS = (
     ROOT
-    / "analysis/fig4_vmc/finite_step"
+    / "analysis/vmc_completion_causal_20260725/evidence"
+    / "decision_020_finite_completion_loggrid_corrected_31837"
 )
 DENSE_LEDGER = (
     ROOT
-    / "analysis/fig4_vmc/dense_completion_ledger"
+    / "analysis/vmc_completion_causal_20260725/dense_completion_ledger"
     / "dense_cumulative_ledger.csv"
 )
 REFERENCE = (
@@ -35,10 +36,10 @@ REFERENCE = (
 )
 AUDIT = (
     ROOT
-    / "analysis/fig4_vmc"
+    / "analysis/vmc_completion_causal_20260725"
     / "fig4_finite_completion"
 )
-OUT = ROOT / "figures/fig4_vmc_finite"
+OUT = ROOT / "paper/figures/main/fig4_vmc_finite"
 
 ARCHITECTURES = ("mlp_direct", "nnbf")
 COLORS = {"mlp_direct": palette.DIRECT, "nnbf": palette.NNBF}

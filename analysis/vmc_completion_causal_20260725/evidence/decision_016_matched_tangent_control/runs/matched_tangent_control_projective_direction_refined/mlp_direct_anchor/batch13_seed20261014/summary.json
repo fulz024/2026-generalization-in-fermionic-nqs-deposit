@@ -1,0 +1,138 @@
+{
+  "batch": {
+    "batch_energy": -0.3226978133035433,
+    "ideal_batch_descent": 3.4437925815582275,
+    "seed": 20261014,
+    "size": 2048,
+    "unique_count": 1967
+  },
+  "match_pass": true,
+  "matching_rule": {
+    "descent_fractions": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "match_tolerance": 0.02,
+    "ridge_ratios": [
+      1e-08,
+      1e-07,
+      1e-06,
+      1e-05,
+      0.0001,
+      0.001,
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "scale_bounds": [
+      0.1,
+      10.0
+    ],
+    "selection_uses_hidden_outcomes": false
+  },
+  "reference_dir": "analysis/vmc_completion_causal_20260725/runs/matched_tangent_references/mlp_direct_pre_epoch1_seed20260791",
+  "selected_match": {
+    "batch_descent_mismatch": 0.0,
+    "descent_fraction": 0.25,
+    "fs_norm_mismatch": 0.003087961787386799,
+    "match_pass": true,
+    "max_match_mismatch": 0.0034296529850753846,
+    "mean_relative_root_residual": 0.7603694122869691,
+    "root_residual_mismatch": 0.0034296529850753846,
+    "scale_log_distance": 1.7369707584007648,
+    "student_fs_norm": 0.3339255551394981,
+    "student_index": 7,
+    "student_root_residual": 0.9960537027722154,
+    "student_scale": 0.3913070227414781,
+    "target_batch_descent": 0.8609481453895569,
+    "teacher_fs_norm": 0.3349582990304365,
+    "teacher_index": 7,
+    "teacher_root_residual": 0.9994756894406196,
+    "teacher_scale": 0.44990989226505035
+  },
+  "student": {
+    "checkpoint": "analysis/vmc_completion_causal_20260725/runs/matched_tangent_distillation_projective_direction_refined/mlp_direct_anchor/nnbf/k63504/seed20260903/checkpoints/nnbf_k63504_seed20260903_step38500_0p9999998.pt",
+    "config": "configs/vmc_dynamic_completion_20260725/generated/h10_lowdin_nnbf_seed20260791.yaml",
+    "gate": {
+      "energy": -0.3023025162902223,
+      "energy_mismatch": 9.964562362851925e-05,
+      "infidelity": 3.66759174919018e-07,
+      "pass": true,
+      "residual_cosine": 0.9999997888719928,
+      "residual_norm": 1.3226330814567393
+    },
+    "krylov": {
+      "dimension": 100.0,
+      "orthogonality_max_error": 2.384185791015625e-07,
+      "parameter_count": 535904,
+      "ridge_scale_rayleigh": 3.8284826278686523
+    },
+    "label": "LogNNBF",
+    "outcome": {
+      "architecture": "LogNNBF",
+      "fs_norm": 0.3339255551394981,
+      "full_exact_tangent_descent": 0.6968328327526094,
+      "hidden_exact_tangent_descent": 0.6467125630984121,
+      "hidden_fraction_of_descent": 0.9280741846560047,
+      "root_exact_tangent_descent": 0.05012026965419739,
+      "scale": 0.3913070227414781
+    },
+    "selected_ridge": {
+      "architecture": "LogNNBF",
+      "batch_descent": 2.200185775756836,
+      "fs_norm": 0.8533594741030504,
+      "parameter_direction_norm": 0.7973790764808655,
+      "ridge": 0.38284826278686523,
+      "ridge_ratio": 0.1,
+      "ridge_scale_rayleigh": 3.8284826278686523,
+      "root_jvp_full_consistency": 2.912274959500535e-07,
+      "root_residual": 0.6151291131973267,
+      "root_residual_relative": 0.46877321971263725
+    }
+  },
+  "teacher": {
+    "checkpoint": "data/vmc_dynamic_completion_20260725/h10/lowdin/mlp_direct/seed20260791/step_payloads/epoch_000001_step.pt",
+    "config": "configs/vmc_dynamic_completion_20260725/generated/h10_lowdin_mlp_direct_seed20260791.yaml",
+    "gate": {
+      "energy": -0.30240216191385105,
+      "energy_mismatch": 2.220446049250313e-16,
+      "infidelity": 2.220446049250313e-16,
+      "pass": true,
+      "residual_cosine": 1.0000000000000002,
+      "residual_norm": 1.322617505114646
+    },
+    "krylov": {
+      "dimension": 100.0,
+      "orthogonality_max_error": 2.384185791015625e-07,
+      "parameter_count": 672532,
+      "ridge_scale_rayleigh": 4.366843223571777
+    },
+    "label": "LogMLPDirect",
+    "outcome": {
+      "architecture": "LogMLPDirect",
+      "fs_norm": 0.3349582990304365,
+      "full_exact_tangent_descent": 0.5055455872248135,
+      "hidden_exact_tangent_descent": 0.4650781406646143,
+      "hidden_fraction_of_descent": 0.9199529229750679,
+      "root_exact_tangent_descent": 0.040467446560199134,
+      "scale": 0.44990989226505035
+    },
+    "selected_ridge": {
+      "architecture": "LogMLPDirect",
+      "batch_descent": 1.913601279258728,
+      "fs_norm": 0.7445008540356928,
+      "parameter_direction_norm": 0.7936045527458191,
+      "ridge": 0.43668432235717775,
+      "ridge_ratio": 0.1,
+      "ridge_scale_rayleigh": 4.366843223571777,
+      "root_jvp_full_consistency": 9.535060150931443e-07,
+      "root_residual": 0.7000477313995361,
+      "root_residual_relative": 0.5334873963206757
+    },
+    "state_key": "model_pre_state_dict"
+  }
+}

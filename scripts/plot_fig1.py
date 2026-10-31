@@ -16,11 +16,11 @@ import pandas as pd
 import prl_palette as palette
 
 ROOT = Path(__file__).resolve().parents[1]
-ZOO = ROOT / "analysis/fig1_architecture_screen"
-SCALING = ROOT / "analysis/fig1_hubbard_scaling"
-NNFMPS = ROOT / "analysis/fig1_nnfmps"
+ZOO = ROOT / "analysis/fig1a_zoo_k4096"
+SCALING = ROOT / "analysis/half_octave_completion_hub34_u4_5seeds"
+NNFMPS = ROOT / "analysis/half_octave_completion_fig1_nnfmps_d64"
 ANALYSIS_OUT = ROOT / "analysis/fig1_hubbard_generalization"
-FIGURE_OUT = ROOT / "figures/fig1_hubbard_generalization"
+FIGURE_OUT = ROOT / "paper/figures/main/fig1_hubbard_generalization"
 
 FIXED_K = 4096
 R_MIN = 9.0
@@ -493,7 +493,7 @@ def main() -> None:
         [zoo_bands, fixed_nnfmps_bands, tnnbf_bands],
         ignore_index=True,
     )
-    decisions = pd.read_csv(ZOO / "summary_metrics.csv")
+    decisions = pd.read_csv(ZOO / "decision_metrics.csv")
     decisions = decisions[~decisions["ansatz"].eq("mps")]
     decisions = pd.concat(
         [
@@ -596,15 +596,7 @@ def main() -> None:
     panel_label(ax_global, "(a)", x=-0.20)
     panel_label(ax_profile, "(b)", x=-0.10)
     panel_label(ax_area, "(c)", x=-0.30)
-    front_axes[0].text(
-        -0.38,
-        1.18,
-        r"$\mathbf{(d)}$",
-        transform=front_axes[0].transAxes,
-        fontsize=8.6,
-        ha="left",
-        va="bottom",
-    )
+    panel_label(front_axes[0], "(d)", x=-0.38)
 
     handles, labels = ax_profile.get_legend_handles_labels()
     fig.legend(
@@ -618,20 +610,27 @@ def main() -> None:
         columnspacing=1.1,
         handletextpad=0.45,
     )
-    # Direct-label the dashed baseline in open space.  A lower-right legend
-    # overlapped the direct-MLP curve at final manuscript size.
-    ax_global.text(
-        610,
-        0.315,
-        "training-set only",
+    # Keep the long label out of the data and use a light leader to identify
+    # the dashed prefix-truncation baseline unambiguously.
+    ax_global.annotate(
+        "prefix truncation",
+        xy=(3072, 0.444),
+        xytext=(18000, 0.315),
         fontsize=8.0,
         color="#222222",
-        ha="left",
+        ha="center",
         va="bottom",
+        arrowprops={
+            "arrowstyle": "-",
+            "color": "#555555",
+            "linewidth": 0.65,
+            "shrinkA": 2.0,
+            "shrinkB": 2.0,
+        },
         bbox={
             "facecolor": "white",
             "edgecolor": "none",
-            "alpha": 0.82,
+            "alpha": 0.88,
             "pad": 0.15,
         },
     )

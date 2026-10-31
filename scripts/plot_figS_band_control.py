@@ -20,30 +20,34 @@ from matplotlib.lines import Line2D
 ROOT = Path(__file__).resolve().parents[1]
 TRAJECTORY = (
     ROOT
-    / "analysis/fig4_vmc/positive_bridge"
+    / "analysis/vmc_completion_causal_20260725/positive_bridge"
     / "certified_completion_trajectory.csv"
 )
 JVP_RUNS = (
     ROOT
-    / "analysis/fig4_vmc/direct_jvp"
+    / "analysis/vmc_completion_causal_20260725/evidence"
+    / "decision_013_direct_jvp_ledger/runs"
 )
 FINITE_COMMON_NEVER_RUNS = (
     ROOT
-    / "analysis/fig4_vmc/finite_common_never"
+    / "analysis/vmc_completion_causal_20260725/runs"
+    / "finite_common_never_20260802"
 )
 MATCHED_RUNS = (
     ROOT
-    / "analysis/fig4_vmc/matched_control"
+    / "analysis/vmc_completion_causal_20260725/evidence"
+    / "decision_016_matched_tangent_control/runs"
+    / "matched_tangent_control_projective_direction_refined/mlp_direct_anchor"
 )
 AUDIT = (
     ROOT
-    / "analysis/fig4_vmc"
+    / "analysis/vmc_completion_causal_20260725"
     / "fig4_final"
 )
-OUT = ROOT / "figures/figS_band_control_source"
+OUT = ROOT / "paper/figures/main/figS_band_control_source"
 CONTROL_OUT = (
     ROOT
-    / "figures"
+    / "paper/figures/main"
     / "figS_band_control"
 )
 
